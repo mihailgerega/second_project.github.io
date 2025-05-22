@@ -1,0 +1,104 @@
+const openFeedbackBtns = document.querySelectorAll('#openFeedbackBtn, #openFeedbackBtn2');
+const feedbackPopup = document.getElementById('feedbackPopup');
+const closeFeedbackBtn = document.getElementById('closeFeedbackBtn');
+const feedbackForm = document.getElementById('feedbackForm');
+const submitBtn = document.getElementById('submitBtn');
+
+const nameInput = document.getElementById('name');
+const emailInput = document.getElementById('email');
+const phoneInput = document.getElementById('phone');
+const messageInput = document.getElementById('message');
+
+const nameError = document.getElementById('nameError');
+const emailError = document.getElementById('emailError');
+const phoneError = document.getElementById('phoneError');
+const messageError = document.getElementById('messageError');
+
+openFeedbackBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    feedbackPopup.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  });
+});
+
+closeFeedbackBtn.addEventListener('click', closeFeedbackPopup);
+feedbackPopup.addEventListener('click', (e) => {
+  if (e.target === feedbackPopup) {
+    closeFeedbackPopup();
+  }
+});
+
+feedbackForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  resetErrors();
+  let isValid = true;
+  const nameRegex = /^[а-яА-ЯёЁa-zA-Z\s]+$/;
+  if (!nameRegex.test(nameInput.value.trim())) {
+    nameError.textContent = 'Имя должно содержать только русские или английские буквы';
+    isValid = false;
+  }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(emailInput.value.trim())) {
+    emailError.textContent = 'Введите корректный email адрес';
+    isValid = false;
+  }
+  const phoneRegex = /^\+?[0-9]{10,15}$/;
+  if (!phoneRegex.test(phoneInput.value.trim())) {
+    phoneError.textContent = 'Введите корректный номер телефона (10-15 цифр)';
+    isValid = false;
+  }
+  if (messageInput.value.trim() === '') {
+    messageError.textContent = 'Введите сообщение';
+    isValid = false;
+  }
+  if (isValid) {
+    submitForm();
+  }
+});
+
+function resetErrors() {
+  nameError.textContent = '';
+  emailError.textContent = '';
+  phoneError.textContent = '';
+  messageError.textContent = '';
+}
+
+function closeFeedbackPopup() {
+  feedbackPopup.classList.remove('active');
+  document.body.style.overflow = '';
+}
+function submitForm() {
+  submitBtn.textContent = 'Отправляем...';
+  submitBtn.classList.add('sending');
+  submitBtn.disabled = true;
+  const formData = {
+    name: nameInput.value.trim(),
+    email: emailInput.value.trim(),
+    phone: phoneInput.value.trim(),
+    message: messageInput.value.trim()
+  };
+  setTimeout(() => {
+    fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+      submitBtn.textContent = 'Успешно отправлено!';
+      submitBtn.classList.remove('sending');
+      submitBtn.classList.add('success');
+      feedbackForm.reset();
+      setTimeout(closeFeedbackPopup, 2000);
+    })
+    .catch(error => {
+      submitBtn.textContent = 'Ошибка! Попробуйте снова';
+      submitBtn.classList.remove('sending');
+      submitBtn.disabled = false;
+    });  
+    feedbackForm.reset();
+    setTimeout(closeFeedbackPopup, 2000);
+  }, 1500);
+}

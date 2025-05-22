@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Интерактивная страница</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <nav class="main-nav">
+        <div class="logo">ProProgress</div>
+        <ul class="menu">
+          <li><a href="#gallery">Галерея</a></li>
+          <li><a href="#about">Обо мне</a></li>
+          <li><a href="#contact">Контакты</a></li>
+          <li><a href="#countdown">Обратный отсчет</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Добро пожаловать на мою страницу-галерею</h1>
+        <p>Здесь вы найдете множество интересных функций и возможностей</p>
+        <button class="btn" id="openFeedbackBtn">Обратная связь</button>
+      </div>
+      <svg class="animated-svg" viewBox="0 0 100 100" width="100" height="100">
+        <circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.2)" stroke-width="2" fill="none" />
+        <path class="animated-path" d="M20,50 Q50,20 80,50 Q50,80 20,50" stroke="white" stroke-width="2" fill="none" />
+      </svg>
+    </section>
+    <section id="gallery" class="gallery-section">
+      <div class="container">
+        <h2>Галерея</h2>
+        <div class="gallery">
+          <div class="gallery-item" data-id="1">
+            <img src="photos/1.jpg" alt="Изображение 1">
+          </div>
+          <div class="gallery-item" data-id="2">
+            <img src="photos/2.jpg" alt="Изображение 2">
+          </div>
+          <div class="gallery-item" data-id="3">
+            <img src="photos/3.jpg" alt="Изображение 3">
+          </div>
+          <div class="gallery-item" data-id="4">
+            <img src="photos/4.jpg" alt="Изображение 4">
+          </div>
+          <div class="gallery-item" data-id="5">
+            <img src="photos/5.webp" alt="Изображение 5">
+          </div>
+          <div class="gallery-item" data-id="6">
+            <img src="photos/6.webp" alt="Изображение 6">
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="about" class="about-section">
+      <div class="container">
+        <h2>Обо мне</h2>
+        <p>Я начинающий программист, который стремится создавать качественные и интерактивные веб-страницы.</p>
+        <p>Моя цель - предоставить пользователям удобный и приятный опыт взаимодействия с сайтом.</p>
+      </div>
+    </section>
+    <section id="countdown" class="countdown-section">
+      <div class="container">
+        <h2>Обратный отсчет до получения диплома МФТИ</h2>
+        <div class="countdown-timer">
+          <div class="countdown-item">
+            <span id="days">00</span>
+            <span class="countdown-label">Дней</span>
+          </div>
+          <div class="countdown-item">
+            <span id="hours">00</span>
+            <span class="countdown-label">Часов</span>
+          </div>
+          <div class="countdown-item">
+            <span id="minutes">00</span>
+            <span class="countdown-label">Минут</span>
+          </div>
+          <div class="countdown-item">
+            <span id="seconds">00</span>
+            <span class="countdown-label">Секунд</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="contact" class="contact-section">
+      <div class="container">
+        <h2>Контакты</h2>
+        <p>Свяжитесь со мной, если у вас есть вопросы или предложения.</p>
+        <button class="btn" id="openFeedbackBtn2">Обратная связь</button>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Интерактивная страница.</p>
+    </div>
+  </footer>
+  <div class="popup gallery-popup" id="galleryPopup">
+    <div class="popup-content">
+      <button class="close-btn" id="closeGalleryBtn">&times;</button>
+      <div class="gallery-popup-content">
+        <button class="gallery-nav prev" id="prevBtn">&lt;</button>
+        <div class="gallery-image-container">
+          <img src="" alt="Увеличенное изображение" id="popupImage">
+        </div>
+        <button class="gallery-nav next" id="nextBtn">&gt;</button>
+      </div>
+    </div>
+  </div>
+  <div class="popup feedback-popup" id="feedbackPopup">
+    <div class="popup-content">
+      <button class="close-btn" id="closeFeedbackBtn">&times;</button>
+      <h3>Обратная связь</h3>
+      <form id="feedbackForm">
+        <div class="form-group">
+          <label for="name">Имя:</label>
+          <input type="text" id="name" name="name" required>
+          <span class="error-message" id="nameError"></span>
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+          <span class="error-message" id="emailError"></span>
+        </div>
+        <div class="form-group">
+          <label for="phone">Телефон:</label>
+          <input type="tel" id="phone" name="phone" required>
+          <span class="error-message" id="phoneError"></span>
+        </div>
+        <div class="form-group">
+          <label for="message">Сообщение:</label>
+          <textarea id="message" name="message" required></textarea>
+          <span class="error-message" id="messageError"></span>
+        </div>
+        <button type="submit" class="btn submit-btn" id="submitBtn">Отправить</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup timed-popup" id="timedPopup">
+    <div class="popup-content">
+      <button class="close-btn" id="closeTimedBtn">&times;</button>
+      <h3>Специальное предложение!</h3>
+      <p>Спасибо, что посетили наш сайт! Мы хотели бы предложить вам специальную скидку на наши услуги.</p>
+      <button class="btn" id="acceptOfferBtn">Узнать больше</button>
+    </div>
+  </div>
+  <script src="js/countdown.js"></script>
+  <script src="js/feedback.js"></script>
+  <script src="js/gallery.js"></script>
+  <script src="js/sticky-header.js"></script>
+  <script src="js/svg-animation.js"></script>
+  <script src="js/timed-popup.js"></script>
+</body>
+</html>
