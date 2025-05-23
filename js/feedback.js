@@ -14,6 +14,64 @@ const emailError = document.getElementById('emailError');
 const phoneError = document.getElementById('phoneError');
 const messageError = document.getElementById('messageError');
 
+nameInput.addEventListener('input', validateName);
+emailInput.addEventListener('input', validateEmail);
+phoneInput.addEventListener('input', validatePhone);
+messageInput.addEventListener('input', validateMessage);
+
+function validateName() {
+  const nameRegex = /^[а-яА-ЯёЁa-zA-Z\s]+$/;
+  if (!nameRegex.test(nameInput.value.trim())) {
+    nameError.textContent = 'Имя должно содержать только русские или английские буквы';
+    return false;
+  }
+  nameError.textContent = '';
+  return true;
+}
+
+function validateEmail() {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(emailInput.value.trim())) {
+    emailError.textContent = 'Введите корректный email адрес';
+    return false;
+  }
+  emailError.textContent = '';
+  return true;
+}
+
+function validatePhone() {
+  const phoneRegex = /^\+?[0-9]{10,15}$/;
+  if (!phoneRegex.test(phoneInput.value.trim())) {
+    phoneError.textContent = 'Введите корректный номер телефона (10-15 цифр)';
+    return false;
+  }
+  phoneError.textContent = '';
+  return true;
+}
+
+function validateMessage() {
+  if (messageInput.value.trim() === '') {
+    messageError.textContent = 'Введите сообщение';
+    return false;
+  }
+  messageError.textContent = '';
+  return true;
+}
+
+feedbackForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  resetErrors();
+  
+  const isNameValid = validateName();
+  const isEmailValid = validateEmail();
+  const isPhoneValid = validatePhone();
+  const isMessageValid = validateMessage();
+  
+  if (isNameValid && isEmailValid && isPhoneValid && isMessageValid) {
+    submitForm();
+  }
+});
+
 openFeedbackBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     feedbackPopup.classList.add('active');
@@ -25,34 +83,6 @@ closeFeedbackBtn.addEventListener('click', closeFeedbackPopup);
 feedbackPopup.addEventListener('click', (e) => {
   if (e.target === feedbackPopup) {
     closeFeedbackPopup();
-  }
-});
-
-feedbackForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  resetErrors();
-  let isValid = true;
-  const nameRegex = /^[а-яА-ЯёЁa-zA-Z\s]+$/;
-  if (!nameRegex.test(nameInput.value.trim())) {
-    nameError.textContent = 'Имя должно содержать только русские или английские буквы';
-    isValid = false;
-  }
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(emailInput.value.trim())) {
-    emailError.textContent = 'Введите корректный email адрес';
-    isValid = false;
-  }
-  const phoneRegex = /^\+?[0-9]{10,15}$/;
-  if (!phoneRegex.test(phoneInput.value.trim())) {
-    phoneError.textContent = 'Введите корректный номер телефона (10-15 цифр)';
-    isValid = false;
-  }
-  if (messageInput.value.trim() === '') {
-    messageError.textContent = 'Введите сообщение';
-    isValid = false;
-  }
-  if (isValid) {
-    submitForm();
   }
 });
 
